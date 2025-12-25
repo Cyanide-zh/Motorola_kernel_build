@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-kernel:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Setup environment
@@ -18,22 +18,7 @@ jobs:
           echo "KERNEL_SOURCE_BRANCH=$(cat config.env | grep -w "KERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "KERNEL_CONFIG=$(cat config.env | grep -w "KERNEL_CONFIG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "BUILD_ARGS=$(cat config.env | grep -w "BUILD_ARGS" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
-          #sudo apt install python2 libncurses5
-          sudo apt install libncurses5
-          wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
-          sudo tar xzf Python-2.7.18.tgz
-          cd Python-2.7.18
-          sudo ./configure --enable-optimizations
-          sudo make altinstall
-          python2.7 -V
-          sudo ln -sfn '/usr/local/bin/python2.7' '/usr/bin/python2'
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3  2
-          sudo update-alternatives --config python  
-          python --version 
-
-
-
+          sudo apt install python2 libncurses5
           sudo apt-get install libselinux-dev
       - name: Pull toolchain
         run: |
